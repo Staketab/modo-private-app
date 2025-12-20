@@ -1,0 +1,74 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: modo-app-db
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - ${POSTGRES_DATA_DIR}:/var/lib/postgresql/data
+    ports:
+      - "127.0.0.1:${POSTGRES_PORT}:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: modo-app-redis
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  rust-backend:
+    image: modoapp/rust-backend:${IMAGE_TAG}
+    container_name: modo-rust-backend
+    env_file:
+      - .env
+    environment:
+      - REDIS_URL=redis://redis:6379
+    # extra_hosts:
+    #   - "${WALLET_EXTRA_HOST}"
+    #   - "${LEDGER_EXTRA_HOST}"
+    depends_on:
+      redis:
+        condition: service_healthy
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8085/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  frontend:
+    image: modoapp/frontend:${IMAGE_TAG}
+    container_name: modo-app-frontend
+    env_file:
+      - .env
+    environment:
+      - PROXY_API_URL=http://rust-backend:8085
+    ports:
+      - "${FRONT_LOCAL_HOST}:${FRONT_LOCAL_PORT}:3000"
+    depends_on:
+      rust-backend:
+        condition: service_healthy
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+networks:
+  default:
+    name: ${DOCKER_NETWORK}
+    external: true
