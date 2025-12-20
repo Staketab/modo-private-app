@@ -82,19 +82,19 @@ cp env.example .env
 | `AUTH_M2M_CLIENT_SECRET` | M2M client secret (from validator) | `your-secret-here` |
 | `AUTH_AUDIENCE` | API audience identifier | `https://your-api.example.com` |
 | `AUTH_APP_CLIENT_ID` | Frontend SPA application client ID | `xY9zW8vU7tS6rQ5p` |
-| `LEDGER_API_URL` | Canton Ledger API endpoint (include prefix if applicable) | `http://ledger-api:7575` |
-| `WALLET_API_URL` | Wallet API endpoint (include prefix if applicable) | `http://wallet-api:8082` |
+| `LEDGER_API_URL` | Canton Ledger API endpoint (include prefix if applicable) | `http://participant:7575` |
+| `WALLET_API_URL` | Wallet API endpoint (include prefix if applicable) | `http://validator:5003/api/validator` |
 | `DOCKER_NETWORK` | External Docker network name | `canton-network` |
 | `POSTGRES_DB` | Database name | `app` |
 | `POSTGRES_USER` | Database user | `app` |
 | `POSTGRES_PASSWORD` | Database password | `your-secure-password` |
 | `POSTGRES_HOST` | Database host (`db` for local, hostname for remote) | `db` |
 | `POSTGRES_PORT` | Database port | `5432` |
-| `IMAGE_TAG` | Docker image version | `v1.0.2` |
+| `IMAGE_TAG` | Docker image version | `v1.0.3` |
 | `LOG_LEVEL` | Logging level (DEBUG, INFO, WARN, ERROR) | `INFO` |
 | `MAIN_PARTY_ID` | MAIN Validator party ID for indexing | `main-validator-party` |
 
-> **Note:** For `LEDGER_API_URL` and `WALLET_API_URL`, include the full path prefix if your APIs use one (e.g., `http://host:port/api/v1`).
+> **Note:** For `LEDGER_API_URL` and `WALLET_API_URL`, include the full path prefix if your APIs use one (e.g., `http://host:port/api/validator`).
 
 ---
 
