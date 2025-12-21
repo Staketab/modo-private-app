@@ -20,6 +20,7 @@ Blockchain indexer and monitoring explorer for Canton Validators.
 - [Quick Start](#quick-start)
 - [Commands Reference](#commands-reference)
 - [Upgrading](#upgrading)
+- [Reading Ledger API from Internal Parties](#reading-ledger-api-from-internal-parties)
 
 ---
 
@@ -90,7 +91,7 @@ cp env.example .env
 | `POSTGRES_PASSWORD` | Database password | `your-secure-password` |
 | `POSTGRES_HOST` | Database host (`db` for local, hostname for remote) | `db` |
 | `POSTGRES_PORT` | Database port | `5432` |
-| `IMAGE_TAG` | Docker image version | `v1.0.3` |
+| `IMAGE_TAG` | Docker image version | `v1.1.0` |
 | `LOG_LEVEL` | Logging level (DEBUG, INFO, WARN, ERROR) | `INFO` |
 | `MAIN_PARTY_ID` | MAIN Validator party ID for indexing | `main-validator-party` |
 
@@ -214,7 +215,7 @@ To upgrade to a new version:
 
 1. Update `IMAGE_TAG` in your `.env` file:
    ```env
-   IMAGE_TAG=v1.0.3
+   IMAGE_TAG=v1.1.0
    ```
 
 2. Pull and restart:
@@ -222,6 +223,20 @@ To upgrade to a new version:
    make pull
    make restart-local  # or make restart-remote
    ```
+
+---
+
+## Reading Ledger API from Internal Parties
+
+To read Ledger API data from internal parties other than the validator party, you need to grant **CanReadAs** rights to the application.
+
+This can be done directly in the application on the **Parties** page:
+
+1. Navigate to **Parties** in the application
+2. Find the internal party you want to read from
+3. Click **CanReadAs** in **Grant Rights** column
+
+![Internal Parties](img/internal.png)
 
 ---
 
