@@ -1,7 +1,7 @@
 # Production Makefile for Modo App (Rust Backend)
 # Docker compose file selection
-COMPOSE_LOCAL := docker-compose-local-db-prd.yml
-COMPOSE_REMOTE := docker-compose-remote-db-prd.yml
+COMPOSE_LOCAL := docker-compose-local-db.yml
+COMPOSE_REMOTE := docker-compose-remote-db.yml
 
 # Detect docker compose command (v1 or v2)
 compose_v2_supported = $(shell command docker compose 2> /dev/null)

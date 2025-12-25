@@ -91,7 +91,7 @@ cp env.example .env
 | `POSTGRES_PASSWORD` | Database password | `your-secure-password` |
 | `POSTGRES_HOST` | Database host (`db` for local, hostname for remote) | `db` |
 | `POSTGRES_PORT` | Database port | `5432` |
-| `IMAGE_TAG` | Docker image version | `v1.1.0` |
+| `IMAGE_TAG` | Docker image version | `v1.2.0` |
 | `LOG_LEVEL` | Logging level (DEBUG, INFO, WARN, ERROR) | `INFO` |
 | `MAIN_PARTY_ID` | MAIN Validator party ID for indexing | `main-validator-party` |
 
@@ -215,7 +215,7 @@ To upgrade to a new version:
 
 1. Update `IMAGE_TAG` in your `.env` file:
    ```env
-   IMAGE_TAG=v1.1.0
+   IMAGE_TAG=v1.2.0
    ```
 
 2. Pull and restart:
